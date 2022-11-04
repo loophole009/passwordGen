@@ -6,4 +6,6 @@
     <string name="new_user">New User</string>
     <string name="new_password">New Password</string>
     <string name="passwords">Passwords</string>
+    <string name="channel_name">Update</string>
+    <string name="channel_description">Update passwords</string>
 </resources>

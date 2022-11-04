@@ -1,6 +1,6 @@
 # passwordGen
 ## todo :
-1. notification for password update quaterly
+1. notification for password update quaterly [done]
 2. encrypted database
 3. biometric verification
 4. remote password retrival
@@ -16,3 +16,6 @@
 
 ## delete :
 <img src="screenshots/Screenshot_20221104_165601.png" width="auto" height="500"/>
+
+## notification ;
+<img src="screenshots/Screenshot_20221105_022856.png" width="auto" height="500"/>
