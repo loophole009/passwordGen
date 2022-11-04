@@ -6,13 +6,13 @@
 4. remote password retrival
 
 ## dashboard :
-<img src="screenshots/Screenshot_20221104_160239.png" width="auto" height="500"/>
+<img src="screenshots/Screenshot_20221104_165535.png" width="auto" height="500"/>
 
 ## create :
-<img src="screenshots/Screenshot_20221104_160329.png" width="auto" height="500"/>
+<img src="screenshots/Screenshot_20221104_165544.png" width="auto" height="500"/>
 
 ## read and update :
-<img src="screenshots/Screenshot_20221104_160309.png" width="auto" height="500"/>
+<img src="screenshots/Screenshot_20221104_165554.png" width="auto" height="500"/>
 
 ## delete :
-<img src="screenshots/Screenshot_20221104_160256.png" width="auto" height="500"/>
+<img src="screenshots/Screenshot_20221104_165601.png" width="auto" height="500"/>
