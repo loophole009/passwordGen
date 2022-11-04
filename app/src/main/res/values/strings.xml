@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">passwordGen</string>
     <string name="save">Save</string>
+    <string name="close">Close</string>
     <string name="new_website">New Website</string>
     <string name="new_user">New User</string>
     <string name="new_password">New Password</string>

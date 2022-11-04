@@ -31,9 +31,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
 
     private DatabaseHandler db;
 
-    private RecyclerView passwordsRecyclerView;
     private PasswordGenAdapter passwordsAdapter;
-    private FloatingActionButton fab;
 
     private List<PasswordGenModel> passwordList;
 
@@ -46,7 +44,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
         db = new DatabaseHandler(this);
         db.openDatabase();
 
-        passwordsRecyclerView = findViewById(R.id.passwordsRecyclerView);
+        RecyclerView passwordsRecyclerView = findViewById(R.id.passwordsRecyclerView);
         passwordsRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         passwordsAdapter = new PasswordGenAdapter(db,MainActivity.this);
         passwordsRecyclerView.setAdapter(passwordsAdapter);
@@ -55,7 +53,7 @@ public class MainActivity extends AppCompatActivity implements DialogCloseListen
                 ItemTouchHelper(new RecyclerItemTouchHelper(passwordsAdapter));
         itemTouchHelper.attachToRecyclerView(passwordsRecyclerView);
 
-        fab = findViewById(R.id.fab);
+        FloatingActionButton fab = findViewById(R.id.fab);
 
         passwordList = db.getAllPasswords();
         Collections.reverse(passwordList);

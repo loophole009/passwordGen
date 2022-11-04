@@ -1,5 +1,6 @@
 package com.example.passwordgen.Adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -7,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -18,13 +20,16 @@ import com.example.passwordgen.Model.PasswordGenModel;
 import com.example.passwordgen.R;
 import com.example.passwordgen.Utils.DatabaseHandler;
 
+import java.text.ParseException;
 import java.util.List;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class PasswordGenAdapter extends RecyclerView.Adapter<PasswordGenAdapter.ViewHolder> {
 
     private List<PasswordGenModel> passwordList;
-    private DatabaseHandler db;
-    private MainActivity activity;
+    private final DatabaseHandler db;
+    private final MainActivity activity;
 
     public PasswordGenAdapter(DatabaseHandler db, MainActivity activity) {
         this.db = db;
@@ -44,11 +49,14 @@ public class PasswordGenAdapter extends RecyclerView.Adapter<PasswordGenAdapter.
         db.openDatabase();
 
         final PasswordGenModel item = passwordList.get(position);
-        holder.password.setText(item.getWebsite());
-    }
 
-    private boolean toBoolean(int n) {
-        return n != 0;
+        holder.password.setText(item.getWebsite());
+        try {
+            holder.circle.setProgress(getProgress(item.getTimestamp()));
+            holder.circle.setMax(90);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -82,12 +90,26 @@ public class PasswordGenAdapter extends RecyclerView.Adapter<PasswordGenAdapter.
         fragment.setArguments(bundle);
         fragment.show(activity.getSupportFragmentManager(), AddNewPassword.TAG);
     }
+
+    public int getProgress(String dateInString) throws ParseException {
+        Date d1;
+        Date d2;
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        d1 = sdf.parse(sdf.format(new Date()));
+        d2 = sdf.parse(dateInString);
+        assert d1 != null;
+        assert d2 != null;
+        long difference = Math.abs(d1.getTime() - d2.getTime());
+        long differenceDates = (difference / (24 * 60 * 60 * 1000));
+        return Math.toIntExact(differenceDates);
+    }
     public static class ViewHolder extends RecyclerView.ViewHolder {
         TextView password;
-
+        ProgressBar circle;
         ViewHolder(View view) {
             super(view);
             password = view.findViewById(R.id.passwordTextView);
+            circle = view.findViewById(R.id.progressBar);
         }
     }
 }

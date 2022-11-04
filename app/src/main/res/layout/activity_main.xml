@@ -8,13 +8,13 @@
         android:id="@+id/passwordsText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textStyle="bold"
-        android:textColor="@android:color/black"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:text="@string/tasks"
+        android:textColor="@android:color/black"
         android:textSize="32sp"
-        android:text="@string/tasks" />
+        android:textStyle="bold" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/passwordsRecyclerView"

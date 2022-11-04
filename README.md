@@ -5,5 +5,14 @@
 3. biometric verification
 4. remote password retrival
 
-<img src="screenshots/Screenshot_20221103_230840.png"/>
-<img src="screenshots/Screenshot_20221104_001325.png"/>
+## dashboard :
+<img src="screenshots/Screenshot_20221104_160239.png" width="auto" height="500"/>
+
+## create :
+<img src="screenshots/Screenshot_20221104_160329.png" width="auto" height="500"/>
+
+## read and update :
+<img src="screenshots/Screenshot_20221104_160309.png" width="auto" height="500"/>
+
+## delete :
+<img src="screenshots/Screenshot_20221104_160256.png" width="auto" height="500"/>

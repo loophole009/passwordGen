@@ -1,5 +1,6 @@
 package com.example.passwordgen.Utils;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -15,7 +16,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DatabaseHandler extends SQLiteOpenHelper {
-    SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     String currentDate = sdf.format(new Date());
     private static final int VERSION = 1;
     private static final String NAME = "passwordGenListDatabase";
@@ -59,6 +60,7 @@ public class DatabaseHandler extends SQLiteOpenHelper {
         db.insert(PASSWORD_TABLE, null, cv);
     }
 
+    @SuppressLint("Range")
     public List<PasswordGenModel> getAllPasswords(){
         List<PasswordGenModel> passwordList = new ArrayList<>();
         Cursor cur = null;

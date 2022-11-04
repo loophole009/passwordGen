@@ -32,6 +32,7 @@ public class AddNewPassword extends BottomSheetDialogFragment {
     private EditText newUserText;
     private EditText newPasswordText;
     private Button newPasswordSaveButton;
+    private Button closeButton;
 
     private DatabaseHandler db;
 
@@ -62,7 +63,8 @@ public class AddNewPassword extends BottomSheetDialogFragment {
         newWebsiteText = requireView().findViewById(R.id.newWebsiteText);
         newUserText = requireView().findViewById(R.id.newUserText);
         newPasswordText = requireView().findViewById(R.id.newPasswordText);
-        newPasswordSaveButton = getView().findViewById(R.id.newPasswordButton);
+        newPasswordSaveButton = requireView().findViewById(R.id.newPasswordButton);
+        closeButton = requireView().findViewById(R.id.closeButton);
 
         boolean isUpdate = false;
 
@@ -76,8 +78,12 @@ public class AddNewPassword extends BottomSheetDialogFragment {
             newUserText.setText(user);
             newPasswordText.setText(password);
             assert website != null;
-            if(password != bundle.getString("password"))
+            if(password.length() > 0 && password != bundle.getString("password"))
                 newPasswordSaveButton.setTextColor(ContextCompat.getColor(requireContext(), R.color.colorPrimaryDark));
+        }
+        else{
+            newPasswordSaveButton.setEnabled(false);
+            newPasswordSaveButton.setTextColor(Color.RED);
         }
 
         db = new DatabaseHandler(getActivity());
@@ -90,9 +96,9 @@ public class AddNewPassword extends BottomSheetDialogFragment {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(s.toString().equals("") && s.toString().equals(bundle.getString("password"))){
+                if(s.toString().equals("")){
                     newPasswordSaveButton.setEnabled(false);
-                    newPasswordSaveButton.setTextColor(Color.GRAY);
+                    newPasswordSaveButton.setTextColor(Color.RED);
                 }
                 else{
                     newPasswordSaveButton.setEnabled(true);
@@ -122,6 +128,12 @@ public class AddNewPassword extends BottomSheetDialogFragment {
                     password.setPassword(passwordText);
                     db.insertPassword(password);
                 }
+                dismiss();
+            }
+        });
+        closeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 dismiss();
             }
         });
