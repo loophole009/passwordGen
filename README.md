@@ -1,6 +1,6 @@
 # passwordGen
 ## todo :
-1. notification for password update quaterly [done]
+1. <s>notification for password update quaterly</s> [done]
 2. encrypted database
 3. biometric verification
 4. remote password retrival
