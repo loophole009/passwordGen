@@ -17,5 +17,5 @@
 ## delete :
 <img src="screenshots/Screenshot_20221104_165601.png" width="auto" height="500"/>
 
-## notification ;
+## notification :
 <img src="screenshots/Screenshot_20221105_022856.png" width="auto" height="500"/>
