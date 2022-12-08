@@ -1,4 +1,6 @@
 # passwordGen
+## WIP
+1. Migrating code to kotlin and implementing MVVM architecture.
 ## todo :
 1. <s>notification for password update quaterly</s> [done]
 2. encrypted database
