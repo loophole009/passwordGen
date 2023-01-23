@@ -1,11 +1,10 @@
 # passwordGen
-## WIP :
-1. migrating code to kotlin and implementing MVVM architecture.
 ## todo :
 1. <s>notification for password update quaterly</s> [done]
-2. encrypted database
-3. biometric verification
-4. remote password retrival
+2. migrating code to kotlin and implementing MVVM architecture.
+3. encrypted database
+4. biometric verification
+5. remote password retrival
 
 ## dashboard :
 <img src="screenshots/Screenshot_20221104_165535.png" width="auto" height="500"/>
