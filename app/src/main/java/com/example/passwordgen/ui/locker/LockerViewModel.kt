@@ -5,7 +5,6 @@ import androidx.lifecycle.viewModelScope
 import com.example.passwordgen.models.Locker
 import com.example.passwordgen.repository.LockerRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -14,8 +13,8 @@ class LockerViewModel @Inject constructor(private val lockerRepository: LockerRe
     ViewModel() {
 
 
-    val lockersLiveData get() = lockerRepository.lockersLiveData
-    val statusLiveData get() = lockerRepository.statusLiveData
+    val lockersFlow get() = lockerRepository.lockersFlow
+    val statusFlow get() = lockerRepository.statusFlow
 
 
     fun updateLocker(locker: Locker) {
@@ -35,5 +34,4 @@ class LockerViewModel @Inject constructor(private val lockerRepository: LockerRe
             lockerRepository.deleteLocker(locker)
         }
     }
-
 }

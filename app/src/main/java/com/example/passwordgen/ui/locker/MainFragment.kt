@@ -5,9 +5,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import com.example.passwordgen.R
@@ -16,6 +19,7 @@ import com.example.passwordgen.models.Locker
 import com.example.passwordgen.util.NetworkResult
 import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainFragment : Fragment() {
@@ -38,8 +42,9 @@ class MainFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         binding.swipeContainer.setOnRefreshListener {
-            lockerViewModel.getAllLockers()
-            bindObservers()
+            findNavController().popBackStack()
+            findNavController().navigate(R.id.mainFragment)
+            binding.swipeContainer.isRefreshing = false
         }
         lockerViewModel.getAllLockers()
         binding.lockerList.layoutManager =
@@ -52,23 +57,27 @@ class MainFragment : Fragment() {
     }
 
     private fun bindObservers() {
-        lockerViewModel.lockersLiveData.observe(viewLifecycleOwner, Observer {
-            when (it) {
-                is NetworkResult.Success -> {
-                    adapter.submitList(it.data)
-                    binding.swipeContainer.isRefreshing = false
-                }
+        viewLifecycleOwner.lifecycleScope.launch{
+            viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
+                lockerViewModel.lockersFlow.collect{
+                    binding.loadingBar.isVisible = false
+                    when (it) {
+                        is NetworkResult.Success -> {
+                            adapter.submitList(it.data)
+                        }
 
-                is NetworkResult.Error -> {
-                    Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
-                        .show()
-                }
+                        is NetworkResult.Error -> {
+                            Toast.makeText(requireContext(), it.message.toString(), Toast.LENGTH_SHORT)
+                                .show()
+                        }
 
-                is NetworkResult.Loading -> {
-
+                        is NetworkResult.Loading -> {
+                            binding.loadingBar.isVisible = true
+                        }
+                    }
                 }
             }
-        })
+        }
     }
 
     private fun onLockerClicked(locker: Locker) {

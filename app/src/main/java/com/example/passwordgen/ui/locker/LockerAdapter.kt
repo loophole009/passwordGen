@@ -30,8 +30,8 @@ class LockerAdapter(private val onLockerClicked: (Locker) -> Unit) :
 
         fun bind(locker: Locker) {
             binding.website.text = locker.website
-            binding.progressBar.progress = Helper.getProgress(locker.timestamp)
             binding.progressBar.max = 120
+            binding.progressBar.progress = Helper.getProgress(locker.timestamp)
 
             binding.root.setOnClickListener {
                 onLockerClicked(locker)
