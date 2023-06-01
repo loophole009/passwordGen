@@ -37,6 +37,10 @@ class MainFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        binding.swipeContainer.setOnRefreshListener {
+            lockerViewModel.getAllLockers()
+            bindObservers()
+        }
         lockerViewModel.getAllLockers()
         binding.lockerList.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL)
@@ -52,7 +56,7 @@ class MainFragment : Fragment() {
             when (it) {
                 is NetworkResult.Success -> {
                     adapter.submitList(it.data)
-
+                    binding.swipeContainer.isRefreshing = false
                 }
 
                 is NetworkResult.Error -> {

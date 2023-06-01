@@ -15,4 +15,6 @@
     <string name="txt_update">Update</string>
     <string name="txt_back">Back</string>
     <string name="add_locker">Add Locker</string>
+    <string name="channel_name">Update</string>
+    <string name="channel_description">Update passwords</string>
 </resources>
