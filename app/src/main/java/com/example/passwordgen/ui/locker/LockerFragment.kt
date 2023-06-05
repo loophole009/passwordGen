@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.annotation.RequiresApi
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Lifecycle
@@ -36,9 +37,6 @@ class LockerFragment : Fragment() {
     private val lockerViewModel by viewModels<LockerViewModel>()
     private var locker: Locker? = null
 
-    private val algorithm = "AES/CBC/PKCS5Padding"
-    private val key = SecretKeySpec("1234567890123456".toByteArray(), "AES")
-    private val iv = IvParameterSpec(ByteArray(16))
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -80,6 +78,23 @@ class LockerFragment : Fragment() {
         }
     }
 
+    class DebounceOnClickListener(
+        private val interval: Long,
+        private val listenerBlock: (View) -> Unit
+    ): View.OnClickListener {
+        private var lastClickTime = 0L
+
+        override fun onClick(v: View) {
+            val time = System.currentTimeMillis()
+            if (time - lastClickTime >= interval) {
+                lastClickTime = time
+                listenerBlock(v)
+            }
+        }
+    }
+    private fun View.setOnClickListener(debounceInterval: Long, listenerBlock: (View) -> Unit) =
+        setOnClickListener(DebounceOnClickListener(debounceInterval, listenerBlock))
+
 
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -87,18 +102,18 @@ class LockerFragment : Fragment() {
     private fun bindHandlers() {
         binding.apply {
 
-            btnSubmit.setOnClickListener {
+            btnSubmit.setOnClickListener(1000L) {
                 val website = txtWebsite.text.toString()
                 val username = txtUsername.text.toString()
                 val password = txtPassword.text.toString()
                 val sdf = SimpleDateFormat("yyyy.MM.dd G 'at' hh:mm:ss a zzz")
                 val currentDate = sdf.format(Date())
-                val cipherText = Helper.encrypt(algorithm, password, key, iv)
+                val cipherText = Helper.encrypt(lockerViewModel.algorithm, password, lockerViewModel.key, lockerViewModel.iv)
                 val input = Locker(website, username, cipherText, currentDate)
                 lockerViewModel.updateLocker(input)
             }
 
-            btnDelete.setOnClickListener {
+            btnDelete.setOnClickListener(1000L) {
                 val website = txtWebsite.text.toString()
                 val username = txtUsername.text.toString()
                 val password = txtPassword.text.toString()
@@ -121,12 +136,14 @@ class LockerFragment : Fragment() {
             locker?.let {
                 binding.txtWebsite.setText(it.website)
                 binding.txtUsername.setText(it.username)
-                val plainText = Helper.decrypt(algorithm,it.password , key, iv)
+                val plainText = Helper.decrypt(lockerViewModel.algorithm,it.password , lockerViewModel.key, lockerViewModel.iv)
                 binding.txtPassword.setText(plainText)
+                binding.btnDelete.isVisible = true
             }
         } else {
             binding.addEditText.text = resources.getString(R.string.add_locker)
             binding.btnSubmit.text = resources.getString(R.string.txt_submit)
+            binding.btnDelete.isVisible = false
         }
     }
 
