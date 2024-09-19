@@ -60,7 +60,7 @@ class MainFragment : Fragment() {
         viewLifecycleOwner.lifecycleScope.launch{
             viewLifecycleOwner.repeatOnLifecycle(Lifecycle.State.STARTED){
                 lockerViewModel.lockersFlow.collect{
-                    binding.loadingBar.isVisible = false
+//                    binding.loadingBar.isVisible = false
                     when (it) {
                         is NetworkResult.Success -> {
                             adapter.submitList(it.data)
@@ -72,7 +72,7 @@ class MainFragment : Fragment() {
                         }
 
                         is NetworkResult.Loading -> {
-                            binding.loadingBar.isVisible = true
+//                            binding.loadingBar.isVisible = true
                         }
                     }
                 }
